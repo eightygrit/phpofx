@@ -1,11 +1,7 @@
-#!/usr/bin/env php
-<?
+<?php
+//error_reporting(-1);
+	
 require_once "ofx.php";
-
-use Seventymph\OFX\OFX;
-
-$routing_number = "000000000";
-$checking_acct_number = "1111222233";
 
 $ofx = new OFX(array(
     "uri" => "https://www.oasis.cfree.com/3001.ofxgp",
@@ -14,7 +10,10 @@ $ofx = new OFX(array(
     "org" => "Wells Fargo",
     "fid" => "3001",
     "bank_id" => $routing_number,
-    "acct_id" => $checking_acct_number,
 ));
 
-$transactions = $ofx->fetch();
+
+$accounts = $ofx->fetch_accounts();
+print_r($accounts);
+$transactions = $ofx->fetch_transactions($accounts[0]);
+?>
